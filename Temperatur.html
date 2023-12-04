@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--Auto refresh (60 sekunder)-->
+    <meta http-equiv="refresh" content="60">
+    <title>Temperaturer for august</title>
+</head>
+<body>
+    <h1>Temperaturer for august</h1>
+
+    <script>
+        // Generere tilfeldige temperaturer med math.random
+        function genererTilfeldigeTemperaturer(antall, minTemp, maxTemp) {
+            const temperaturer = [];
+            for (let i = 0; i < antall; i++) {
+                const temperatur = Math.floor(Math.random() * (maxTemp - minTemp + 1)) + minTemp;
+                temperaturer.push(temperatur);
+            }
+            return temperaturer;
+        }
+
+        // 31 tilfeldige temperaturer for august (13°C til 28°C)
+        const temperaturerAugust = genererTilfeldigeTemperaturer(31, 13, 28);
+
+        // Finne laveste og høyeste temperatur
+        const lavesteTemp = Math.min(...temperaturerAugust);
+        const hoyesteTemp = Math.max(...temperaturerAugust);
+
+        // Regne ut variasjonsbredde
+        const variasjonsbredde = hoyesteTemp - lavesteTemp;
+
+        // Regne ut gjennomsnittstemperatur
+        const gjennomsnittTemp = temperaturerAugust.reduce((sum, temp) => sum + temp, 0) / temperaturerAugust.length;
+
+        // Sortere temperaturer og finn medianen
+        const sorterteTemperaturer = [...temperaturerAugust].sort((a, b) => a - b);
+        const midten = Math.floor(sorterteTemperaturer.length / 2);
+        const medianTemp = sorterteTemperaturer.length % 2 === 0
+            ? (sorterteTemperaturer[midten - 1] + sorterteTemperaturer[midten]) / 2
+            : sorterteTemperaturer[midten];
+
+        // Skrive ut resultatene inni Consolen
+        console.log("Temperaturer for august:", temperaturerAugust);
+        console.log("Laveste temperatur:", lavesteTemp + "°C");
+        console.log("Høyeste temperatur:", hoyesteTemp + "°C");
+        console.log("Variasjonsbredde:", variasjonsbredde + "°C");
+        console.log("Gjennomsnittstemperatur:", gjennomsnittTemp.toFixed(2) + "°C");
+        console.log("Median temperatur:", medianTemp + "°C");
+
+        // Skriv resultatene på skjermen
+        const resultatElement = document.createElement('div');
+        resultatElement.innerHTML = `
+            <p>Temperaturer for august: ${temperaturerAugust.join("°C, ")}°C</p>
+            <p>Laveste temperatur: ${lavesteTemp}°C</p>
+            <p>Høyeste temperatur: ${hoyesteTemp}°C</p>
+            <p>Variasjonsbredde: ${variasjonsbredde}°C</p>
+            <p>Gjennomsnittstemperatur: ${gjennomsnittTemp.toFixed(2)}°C</p>
+            <p>Median temperatur: ${medianTemp}°C</p>
+        `;
+        // Tofixed(2) = 2 desimaler
+        document.body.appendChild(resultatElement);
+
+
+        
+    </script>
+
+    
+</body>
+</html>
